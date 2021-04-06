@@ -25,6 +25,7 @@ namespace RDR2PhotoConverter
             InitializeComponent();
         }
 
+        #region ClickEvents
         private void OnDefaultPathClicked(object sender, RoutedEventArgs e)
         {
 
@@ -34,10 +35,33 @@ namespace RDR2PhotoConverter
         {
 
         }
+        private void OnDblClickTextBox(object sender, MouseButtonEventArgs e)
+        {
+
+        }
 
         private void OnSetDirectoryClick(object sender, RoutedEventArgs e)
         {
 
         }
+
+        private void OnConvertFilesClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnMyTwitterClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnMyGithubClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+
     }
 }

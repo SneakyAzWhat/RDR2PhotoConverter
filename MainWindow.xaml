@@ -32,7 +32,7 @@
         <RadioButton x:Name="myDefaultPathRadioButton" IsChecked="True" Content="Use Default Path" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" VerticalContentAlignment="Center" Cursor="Hand" Foreground="#FFE2E2D3" ToolTip="Use the default profile path where RDR2 game photos are stored" Grid.Row="1" Grid.ColumnSpan="2" Margin="93,10,0,0" Click="OnDefaultPathClicked"/>
         <RadioButton x:Name="myCustomPathRadioButton" Content="Use Custom Path" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" VerticalContentAlignment="Center" Cursor="Hand" Foreground="#FFE2E2D3" ToolTip="Choose a custom path where you are storing your PRDR files" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="218,10,0,0" Click="OnCustomPathClicked" FontWeight="Normal"/>
 
-        <TextBox x:Name="dirInputTextBox" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="14" Height="20" Background="#FFE2E2D3" Grid.Row="1" Width="575" Grid.ColumnSpan="3" ToolTip="Paste the path to your PRDR files here" MouseDoubleClick="OnDoubleClickTextBox" FontFamily="Segoe UI"/>
+        <TextBox x:Name="dirInputTextBox" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="14" Height="20" Background="#FFE2E2D3" Grid.Row="1" Width="575" Grid.ColumnSpan="3" ToolTip="Paste the path to your PRDR files here" MouseDoubleClick="OnDblClickTextBox" FontFamily="Segoe UI"/>
 
         <Button x:Name="setDirectoryButton" Content="Set Directory" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OnSetDirectoryClick" FontSize="18" Background="#FFD92121" Grid.Row="1" Foreground="Black" FontWeight="Normal" Cursor="Hand" Grid.Column="1" Margin="0,93,0,0" ToolTip="Sets the above path as our 'working' directory for the conversion process"/>
 
@@ -46,19 +46,19 @@
         <Label Content="Converting Files" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Foreground="#FFE2E2D3" Grid.Row="3" Grid.Column="1" Margin="0,13,0,0"/>
 
         <CheckBox x:Name="myBackupCheckbox" Content="Backup your PRDR Files" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" FontSize="16" Foreground="#FFE2E2D3" Grid.Column="1" Margin="0,10,0,0" IsChecked="True" Cursor="Hand" ToolTip="Check this box if you want your files backed up to: \Pictures\RDR2 Photos\prdr backups"/>
-        <CheckBox x:Name="myDeleteCheckbox" Content="Delete your PRDR Files" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" FontSize="16" Foreground="#FFE2E2D3" Grid.Column="1" Cursor="Hand" ToolTip="Check this box to delete the PRDR files from your specified path after the backup/conversion process"/>
+        <CheckBox x:Name="myDeleteCheckbox" Content="Delete your PRDR Files" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" FontSize="16" Foreground="#FFE2E2D3" Grid.Column="1" Cursor="Hand" ToolTip="Check this box to delete the PRDR files from your specified path after the backup/conversion process" Margin="36,0,0,0"/>
 
-        <Button x:Name="convertFileButton" Content="Convert Files" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" Click="OnConvertFileClick" FontSize="18" Background="#FFD92121" Cursor="Hand" Grid.Column="1" Margin="0,88,0,0" ToolTip="Begins converting valid files, will also backup/delete those files during the process if those boxes are checked"/>
+        <Button x:Name="convertFileButton" Content="Convert Files" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" Click="OnConvertFilesClick" FontSize="18" Background="#FFD92121" Cursor="Hand" Grid.Column="1" Margin="0,88,0,0" ToolTip="Begins converting valid files, will also backup/delete those files during the process if those boxes are checked"/>
 
 
         <!-- Author/Support links -->
         <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Label Content="Author:" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" Foreground="#FFE2E2D3" Margin="0,0,0,8" Width="50"/>
-            <Button x:Name="twitterButton" Margin="0,10,5,10" Content="Twitter" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" Click="OnTwitterClick" Background="#FFD92121" Cursor="Hand" ToolTip="Opens URL: https://twitter.com/SneakyAzWhat" Grid.Column="2"/>
-            <Button x:Name="githubButton" Content="Github" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" Click="OnGithubClick" Background="#FFD92121" Cursor="Hand" ToolTip="Opens URL: https://github.com/SneakyAzWhat" Grid.Column="2" Margin="0,0,10,10"/>
+            <Button x:Name="twitterButton" Margin="0,10,5,10" Content="Twitter" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" Click="OnMyTwitterClick" Background="#FFD92121" Cursor="Hand" ToolTip="Opens URL: https://twitter.com/SneakyAzWhat" Grid.Column="2"/>
+            <Button x:Name="githubButton" Content="Github" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" Click="OnMyGithubClick" Background="#FFD92121" Cursor="Hand" ToolTip="Opens URL: https://github.com/SneakyAzWhat" Grid.Column="2" Margin="0,0,10,10"/>
         </StackPanel>
 
-        
+
         <!-- Status Bar -->
         <StatusBar Grid.Row="5" Background="#FFE2E2D3" Grid.ColumnSpan="3" ToolTip="Status bar that displays information and errors" Cursor="Help">
             <StatusBarItem Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
