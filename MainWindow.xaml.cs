@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
+using Path = System.IO.Path;
 
 namespace RDR2PhotoConverter
 {
@@ -20,9 +13,37 @@ namespace RDR2PhotoConverter
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static string userName = Environment.UserName;
+        private static string defaultDirPRDR;
+        private static string customDirPRDR;
+        private static string activeDir;
+
+        private static string backupDirPRDR;
+        private static string convertedFilesDir;
+
+        List<string> prdrFiles = new List<string>();
+        string fileName;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            string[] fullDir = Directory.GetDirectories($"C:\\Users\\{userName}\\Documents\\Rockstar Games\\Red Dead Redemption 2\\Profiles");
+            defaultDirPRDR = fullDir[0];
+
+            convertedFilesDir = $"C:\\Users\\{userName}\\Pictures\\RDR2 Photos";
+            backupDirPRDR = $"C:\\Users\\{userName}\\Pictures\\RDR2 Photos\\prdr backups";
+
+            if (!Directory.Exists(convertedFilesDir))
+            {
+                Directory.CreateDirectory(convertedFilesDir);
+            }
+            else if (!Directory.Exists(backupDirPRDR))
+            {
+                Directory.CreateDirectory(backupDirPRDR);
+            }
+
+            dirInputTextBox.Text = defaultDirPRDR;
         }
 
         #region ClickEvents
