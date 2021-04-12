@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 using Path = System.IO.Path;
@@ -24,7 +25,7 @@ namespace RDR2PhotoConverter
         private static string convertedFilesDir;
 
         List<string> prdrFiles = new List<string>();
-        string fileName;
+        private string fileName;
 
         public MainWindow()
         {
@@ -43,48 +44,88 @@ namespace RDR2PhotoConverter
         #region ClickEvents
         private void OnDefaultPathClicked(object sender, RoutedEventArgs e)
         {
-
+            dirInputTextBox.Text = defaultDirPRDR;
         }
 
         private void OnCustomPathClicked(object sender, RoutedEventArgs e)
         {
-
+            dirInputTextBox.Text = "Paste your custom path here";
         }
+
         private void OnDblClickTextBox(object sender, MouseButtonEventArgs e)
         {
-
+            (sender as TextBox).SelectAll();
         }
 
         private void OnSetDirectoryClick(object sender, RoutedEventArgs e)
         {
             if (myDefaultPathRadioButton.IsChecked == true)
             {
-                statusBarTextBlock.Text = $"Valid Path found at {defaultDirPRDR}";
+                statusBarTextBlock.Text = $"Valid Default Path found";
             }
             else if (myCustomPathRadioButton.IsChecked == true)
             {
                 GetCustomDir();
                 activeDir = customDirPRDR;
             }
-
-            GetValidFiles(activeDir);
-            ////////////MessageBox.Show("set directory clicked test yeah this this is a long long boi message to see what this looks lijke i dont know why my app doesnt work pls microsoft fix me ty");
-
         }
 
         private void OnConvertFilesClick(object sender, RoutedEventArgs e)
         {
-            //TODO - MessageBox.Show() at the end of converting process to notify user it is completed! :)
+            GetValidFiles(activeDir);
+
+            if (myBackupCheckbox.IsChecked == true)
+            {
+                BackupPRDRs();
+            }
+
+            foreach (var file in prdrFiles)
+            {
+                fileName = $"{GetMetaData(file)} {file.Substring(activeDir.Length + 1)}";
+
+                byte[] fileInBytes = File.ReadAllBytes(file);
+                byte[] fileInBytesTemp = new byte[fileInBytes.Length - 300];
+                long counter = 0;
+
+                for (long i = 300; i < fileInBytes.LongLength; i++)
+                {
+                    fileInBytesTemp[counter] = fileInBytes[i];
+                    counter++;
+                }
+
+                File.WriteAllBytes($"{convertedFilesDir}\\{fileName}.jpg", fileInBytesTemp);
+
+                if (myDeleteCheckbox.IsChecked == true)
+                {
+                    File.Delete(file);
+                }
+            }
+
+            statusBarTextBlock.Text += $"{prdrFiles.Count} files converted into images.";
+
+            prdrFiles.Clear();
+
+            MessageBox.Show($"{statusBarTextBlock.Text} All done!");
         }
 
         private void OnMyTwitterClick(object sender, RoutedEventArgs e)
         {
-
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = "https://twitter.com/SneakyAzWhat",
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
 
         private void OnMyGithubClick(object sender, RoutedEventArgs e)
         {
-
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = "https://github.com/SneakyAzWhat",
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
 
         #endregion
@@ -96,11 +137,12 @@ namespace RDR2PhotoConverter
             customDirPRDR = dirInputTextBox.Text;
             if (Directory.Exists(customDirPRDR))
             {
-                statusBarTextBlock.Text = $"Valid Custom Path entered";
+                statusBarTextBlock.Text = "Valid Custom Path entered";
             }
             else
             {
-                statusBarTextBlock.Text = $"Invalid Custom Path entered, please double check your entered path and try again";
+                statusBarTextBlock.Text = "Invalid Custom Path entered, please double check your entered path and try again";
+                MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
             }
         }
 
@@ -118,6 +160,34 @@ namespace RDR2PhotoConverter
             }
 
             statusBarTextBlock.Text = $"PRDRs retrieved, ready to convert files";
+        }
+
+        private string GetMetaData(string file)
+        {
+            byte[] fileInBytes = File.ReadAllBytes(file);
+
+            string dataString = "";
+
+            //Iterating through the indexes 20-47 to get the date/time the picture was taken (These indexes contain the most pertinent information)
+            for (int i = 20; i < 48; i++)
+            {
+                if (fileInBytes[i] > 31) //bytes < 31 are ascii and are not relevant for our task
+                {
+                    switch (fileInBytes[i])
+                    {
+                        case 47:
+                            dataString += "-"; // Replacing / with -
+                            break;
+                        case 58:
+                            dataString += ""; //Replacing : with nothing
+                            break;
+                        default:
+                            dataString += $"{Convert.ToChar(fileInBytes[i])}";
+                            break;
+                    }
+                }
+            }
+            return dataString;
         }
 
         #endregion
@@ -150,5 +220,28 @@ namespace RDR2PhotoConverter
             }
         }
         #endregion
+
+        private void BackupPRDRs()
+        {
+            int backedUpFiles = 0;
+            int duplicateFiles = 0;
+
+            foreach (var file in prdrFiles)
+            {
+                fileName = file.Substring(activeDir.Length + 1);
+
+                try
+                {
+                    File.Copy(Path.Combine(activeDir, fileName), Path.Combine(backupDirPRDR, $"{GetMetaData(file)} {file.Substring(activeDir.Length + 1)}"), false);
+                    backedUpFiles++;
+                }
+                catch (Exception)
+                {
+                    duplicateFiles++;
+                }
+            }
+
+            statusBarTextBlock.Text = $"{backedUpFiles} files backed up, {duplicateFiles} duplicates. ";
+        }
     }
 }
