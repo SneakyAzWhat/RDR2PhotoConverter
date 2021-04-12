@@ -61,8 +61,8 @@
 
         <!-- Status Bar -->
         <StatusBar Grid.Row="5" Background="#FFE2E2D3" Grid.ColumnSpan="3" ToolTip="Status bar that displays information and errors" Cursor="Help">
-            <StatusBarItem Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                <TextBlock x:Name="statusBarTextBlock" HorizontalAlignment="Left" Text="Status: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" TextDecorations="{x:Null}"/>
+            <StatusBarItem Grid.Column="0" VerticalAlignment="Top">
+                <TextBlock x:Name="statusBarTextBlock" HorizontalAlignment="Left" Text="Status: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" TextDecorations="{x:Null}" FontFamily="Segoe UI"/>
             </StatusBarItem>
         </StatusBar>
 
