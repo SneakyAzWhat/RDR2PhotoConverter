@@ -33,10 +33,9 @@ namespace RDR2PhotoConverter
             userName = Environment.UserName;
 
             GetDefaultDirectory();
-            SetDirectories();
+            SetAppDirectories();
 
             dirInputTextBox.Text = defaultDirPRDR;
-
         }
 
         #region ClickEvents
@@ -78,37 +77,33 @@ namespace RDR2PhotoConverter
         #endregion
 
         #region Getters
-        private void GetDefaultDirectory() //Trying to get default directory, small % of users may have an issue with their USER not matching their USERNAME
+        private void GetDefaultDirectory()
         {
-
             string[] fulldir = Directory.GetDirectories($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Rockstar Games\\Red Dead Redemption 2\\Profiles");
             defaultDirPRDR = fulldir[0];
 
             Debug.WriteLine(defaultDirPRDR);
-
         }
 
         #endregion
 
         #region Setters
-        private void SetDirectories()
+        private void SetAppDirectories()
         {
-            ////This stuff runs only after the default directory issue is resolved and set (in case it needs to be changed from environment.username)
-            //MessageBox.Show("Congrats, this program doesn't break on your PC. The rest of the application is disabled right now as this is just a testing build. PLEASE let me know it worked for you!");
+            string myPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            convertedFilesDir = $"{myPictures}\\RDR2 Photos";
+            backupDirPRDR = $"{myPictures}\\RDR2 Photos\\prdr backups";
 
-            ////Use this to find the pictures folder and then create the new subdirectories based on that
-            //Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            //convertedFilesDir = $"C:\\Users\\{userName}\\Pictures\\RDR2 Photos";
-            //backupDirPRDR = $"C:\\Users\\{userName}\\Pictures\\RDR2 Photos\\prdr backups";
+            Debug.WriteLine($"converted: {convertedFilesDir} backup: {backupDirPRDR}");
 
-            //if (!Directory.Exists(convertedFilesDir))
-            //{
-            //    Directory.CreateDirectory(convertedFilesDir);
-            //}
-            //else if (!Directory.Exists(backupDirPRDR))
-            //{
-            //    Directory.CreateDirectory(backupDirPRDR);
-            //}
+            if (!Directory.Exists(convertedFilesDir))
+            {
+                Directory.CreateDirectory(convertedFilesDir);
+            }
+            if (!Directory.Exists(backupDirPRDR))
+            {
+                Directory.CreateDirectory(backupDirPRDR);
+            }
         }
         #endregion
     }
