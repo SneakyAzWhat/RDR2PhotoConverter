@@ -42,21 +42,41 @@ namespace RDR2PhotoConverter
         }
 
         #region ClickEvents
+        /// <summary>
+        /// Updates the text displayed in the TextBox for clarity purposes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDefaultPathClicked(object sender, RoutedEventArgs e)
         {
             dirInputTextBox.Text = defaultDirPRDR;
         }
 
+        /// <summary>
+        /// Updates the text displayed in the TextBox for clarity purposes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnCustomPathClicked(object sender, RoutedEventArgs e)
         {
             dirInputTextBox.Text = "Paste your custom path here";
         }
 
+        /// <summary>
+        /// Allows you to doubleclick on the text within the TextBox to select all of the text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDblClickTextBox(object sender, MouseButtonEventArgs e)
         {
             (sender as TextBox).SelectAll();
         }
 
+        /// <summary>
+        /// Sets either the Default or Custom directory as the activeDir, dependent on which radio button is selected when this button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnSetDirectoryClick(object sender, RoutedEventArgs e)
         {
             if (myDefaultPathRadioButton.IsChecked == true)
@@ -70,6 +90,11 @@ namespace RDR2PhotoConverter
             }
         }
 
+        /// <summary>
+        /// Converts list of prdrFiles into images, if you checked the 'backup' or 'delete' boxes those things will happen here too
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnConvertFilesClick(object sender, RoutedEventArgs e)
         {
             GetValidFiles(activeDir);
@@ -108,6 +133,11 @@ namespace RDR2PhotoConverter
             MessageBox.Show($"{statusBarTextBlock.Text} All done!");
         }
 
+        /// <summary>
+        /// Clicking Twitter button in bottom right corner opens your browser and directs you to my twitter account
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMyTwitterClick(object sender, RoutedEventArgs e)
         {
             ProcessStartInfo psi = new ProcessStartInfo
@@ -118,6 +148,11 @@ namespace RDR2PhotoConverter
             Process.Start(psi);
         }
 
+        /// <summary>
+        /// Clicking Github button in bottom right corner opens your browser and directs you to my github account
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMyGithubClick(object sender, RoutedEventArgs e)
         {
             ProcessStartInfo psi = new ProcessStartInfo
@@ -127,11 +162,13 @@ namespace RDR2PhotoConverter
             };
             Process.Start(psi);
         }
-
         #endregion
 
-        #region Getters
 
+        /// <summary>
+        /// Checking whether the user entered custom path exists or not
+        /// </summary>
+        #region Getters
         private void GetCustomDir()
         {
             customDirPRDR = dirInputTextBox.Text;
@@ -146,6 +183,10 @@ namespace RDR2PhotoConverter
             }
         }
 
+        /// <summary>
+        /// Searching the activeDir for PRDR files and adding them to prdrFiles List
+        /// </summary>
+        /// <param name="path"></param>
         private void GetValidFiles(string path)
         {
             string[] files = Directory.GetFiles(path);
@@ -162,6 +203,11 @@ namespace RDR2PhotoConverter
             statusBarTextBlock.Text = $"PRDRs retrieved, ready to convert files";
         }
 
+        /// <summary>
+        /// Reading the MetaData of each PRDR file to get the date and time when the picture was taken
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         private string GetMetaData(string file)
         {
             byte[] fileInBytes = File.ReadAllBytes(file);
@@ -189,11 +235,12 @@ namespace RDR2PhotoConverter
             }
             return dataString;
         }
-
         #endregion
 
+        /// <summary>
+        /// Getting and Setting the default RDR2 directory where PRDR files are located
+        /// </summary>
         #region Setters
-
         private void SetDefaultDirectory()
         {
             string[] fulldir = Directory.GetDirectories($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Rockstar Games\\Red Dead Redemption 2\\Profiles");
@@ -202,6 +249,9 @@ namespace RDR2PhotoConverter
             Debug.WriteLine(defaultDirPRDR);
         }
 
+        /// <summary>
+        /// Creates RDR2 Photos and prdr Backups folders if they don't exist, this is where converted files and backups are stored
+        /// </summary>
         private void SetAppDirectories()
         {
             string myPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
@@ -221,6 +271,9 @@ namespace RDR2PhotoConverter
         }
         #endregion
 
+        /// <summary>
+        /// Backs up every file in prdrFiles to backupDirPRDR and checks for duplicates
+        /// </summary>
         private void BackupPRDRs()
         {
             int backedUpFiles = 0;
