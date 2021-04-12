@@ -32,8 +32,10 @@ namespace RDR2PhotoConverter
 
             userName = Environment.UserName;
 
-            GetDefaultDirectory();
+            SetDefaultDirectory();
             SetAppDirectories();
+
+            activeDir = defaultDirPRDR;
 
             dirInputTextBox.Text = defaultDirPRDR;
         }
@@ -55,7 +57,18 @@ namespace RDR2PhotoConverter
 
         private void OnSetDirectoryClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("set directory clicked test yeah this this is a long long boi message to see what this looks lijke i dont know why my app doesnt work pls microsoft fix me ty");
+            if (myDefaultPathRadioButton.IsChecked == true)
+            {
+                statusBarTextBlock.Text = $"Valid Path found at {defaultDirPRDR}";
+            }
+            else if (myCustomPathRadioButton.IsChecked == true)
+            {
+                GetCustomDir();
+                activeDir = customDirPRDR;
+            }
+
+            GetValidFiles(activeDir);
+            ////////////MessageBox.Show("set directory clicked test yeah this this is a long long boi message to see what this looks lijke i dont know why my app doesnt work pls microsoft fix me ty");
 
         }
 
@@ -77,7 +90,41 @@ namespace RDR2PhotoConverter
         #endregion
 
         #region Getters
-        private void GetDefaultDirectory()
+
+        private void GetCustomDir()
+        {
+            customDirPRDR = dirInputTextBox.Text;
+            if (Directory.Exists(customDirPRDR))
+            {
+                statusBarTextBlock.Text = $"Valid Custom Path entered";
+            }
+            else
+            {
+                statusBarTextBlock.Text = $"Invalid Custom Path entered, please double check your entered path and try again";
+            }
+        }
+
+        private void GetValidFiles(string path)
+        {
+            string[] files = Directory.GetFiles(path);
+            statusBarTextBlock.Text = $"Retrieving the applicable PRDR files";
+
+            foreach (var file in files)
+            {
+                if (file.Contains("PRDR"))
+                {
+                    prdrFiles.Add(file);
+                }
+            }
+
+            statusBarTextBlock.Text = $"PRDRs retrieved, ready to convert files";
+        }
+
+        #endregion
+
+        #region Setters
+
+        private void SetDefaultDirectory()
         {
             string[] fulldir = Directory.GetDirectories($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Rockstar Games\\Red Dead Redemption 2\\Profiles");
             defaultDirPRDR = fulldir[0];
@@ -85,9 +132,6 @@ namespace RDR2PhotoConverter
             Debug.WriteLine(defaultDirPRDR);
         }
 
-        #endregion
-
-        #region Setters
         private void SetAppDirectories()
         {
             string myPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
