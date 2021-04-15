@@ -15,13 +15,13 @@ This automates the process of converting, backing up and deleting X amount of fi
 It is likely that you'll get a windows security warning and/or an antivirus prompt if for some reason you have one installed (talking about norton, mcaffee etc). This is expected behavior as I don't have a certificate nor have I looked into the process of how to disable those warnings for windows. As a result this application source code is available on my github to show what the program is doing, I have included little notes in the MainWindow.xaml.cs file to describe what is happening for people who may not be familiar with programming. If you have ANY further questions don't hesitate to ask me. If you're an experienced programmer, then I apologize for the verbose code/comments and overall mess! :P
 
 ## Instructions
->[Youtube video walkthrough if you prefer visual/audio to text](http://www.github.com/) **---- add the youtube video walkthrough link**
+>[Youtube video walkthrough if you prefer visual/audio to text instructions](https://www.youtube.com/watch?v=2dQcuId1TII)
 
 
 1. [Download the ZIP from here](https://github.com/SneakyAzWhat/RDR2PhotoConverter/releases/download/v1.0/RDR2PhotoConverter.zip)
 2. Unzip it in your Documents folder (or wherever you'd like to store it)
 3. Run the 'RDR2 Photo Converter.exe' (Windows/antivirus may pop a warning here as mentioned above)
-4. -- You may be [asked](https://github.com/SneakyAzWhat/RDR2PhotoConverter/blob/main/dotnet5popup.png) to download '.net 5', the app depends on this windows functionality so click yes and download the x64 version, some of you may have it installed already. --
+4. -- You may be [asked](https://github.com/SneakyAzWhat/RDR2PhotoConverter/blob/master/dotnet5popup.png) to download '.net 5', the app depends on this windows functionality so click yes and download the x64 version, some of you may have it installed already. --
 5. By default the program will retrieve the default path for these RDR2 photo files. If you've been manually moving the PRDR files to another path, you can select 'Custom Path' and paste in that path to convert them.
 6. Click the **Set Directory** button so the application knows which path you're using
 7. Decide if you want to backup/delete your prdr files during the conversion process and check the appropriate boxes (by default I have it backup your files. Deleting the files is useful to create space for more pictures)
