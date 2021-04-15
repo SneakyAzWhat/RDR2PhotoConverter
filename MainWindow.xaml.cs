@@ -97,8 +97,9 @@ namespace RDR2PhotoConverter
         /// <param name="e"></param>
         private void OnConvertFilesClick(object sender, RoutedEventArgs e)
         {
-            string backupInfo;
             GetValidFiles(activeDir);
+
+            string backupInfo;
 
             if (myBackupCheckbox.IsChecked == true)
             {
@@ -123,7 +124,16 @@ namespace RDR2PhotoConverter
                     counter++;
                 }
 
-                File.WriteAllBytes($"{convertedFilesDir}\\{fileName}.jpg", fileInBytesTemp);
+                try
+                {
+                    //ISSUE: This is triggering an exception for windows 7 user
+                    File.WriteAllBytes($"{convertedFilesDir}\\{fileName}.jpg", fileInBytesTemp);
+                }
+                catch (Exception exception)
+                {
+                    //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
+                    MessageBox.Show($"WriteAllBytes exception, chances are the program didn't work. Disabling your antivirus or whitelisting the program may fix this. \n\n{exception.Message} ");
+                }
 
                 if (myDeleteCheckbox.IsChecked == true)
                 {
@@ -292,9 +302,13 @@ namespace RDR2PhotoConverter
                     File.Copy(Path.Combine(activeDir, fileName), Path.Combine(backupDirPRDR, $"{GetMetaData(file)} {file.Substring(activeDir.Length + 1)}"), false);
                     backedUpFiles++;
                 }
-                catch (Exception)
+                catch (IOException)
                 {
                     duplicateFiles++;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"BackupPRDRs: {e.Message}");
                 }
             }
 
