@@ -31,6 +31,10 @@ It is likely that you'll get a windows security warning and/or an antivirus prom
 >pictures are stored in \Pictures\RDR2 Photos  
 >backups of your prdr files are stored in \Pictures\RDR2 Photos\prdr backups  
 
+
+## Troubleshooting
+If you use an AntiVirus, sometimes it will not allow the application to function correctly. If you are having trouble with 'access denied' or something along those lines, try disabling your AntiVirus or whitelisting the application in your antivirus to see if that resolves the problem.
+
 &nbsp;   
 I'd like to give credit to the following [person/thread](https://www.reddit.com/r/PCRedDead/comments/dvejz5/rdr2_photomode_extractor/) for giving me the idea. Creating a desktop (WPF) application would be a fun little learning process, plus it makes things much easier for the average user to access and consume.
 
