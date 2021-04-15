@@ -97,11 +97,16 @@ namespace RDR2PhotoConverter
         /// <param name="e"></param>
         private void OnConvertFilesClick(object sender, RoutedEventArgs e)
         {
+            string backupInfo;
             GetValidFiles(activeDir);
 
             if (myBackupCheckbox.IsChecked == true)
             {
-                BackupPRDRs();
+                backupInfo = BackupPRDRs();
+            }
+            else
+            {
+                backupInfo = "";
             }
 
             foreach (var file in prdrFiles)
@@ -126,7 +131,7 @@ namespace RDR2PhotoConverter
                 }
             }
 
-            statusBarTextBlock.Text += $"{prdrFiles.Count} files converted into images.";
+            statusBarTextBlock.Text = $"{backupInfo} {prdrFiles.Count} files converted into images.";
 
             prdrFiles.Clear();
 
@@ -190,7 +195,6 @@ namespace RDR2PhotoConverter
         private void GetValidFiles(string path)
         {
             string[] files = Directory.GetFiles(path);
-            statusBarTextBlock.Text = $"Retrieving the applicable PRDR files";
 
             foreach (var file in files)
             {
@@ -274,7 +278,7 @@ namespace RDR2PhotoConverter
         /// <summary>
         /// Backs up every file in prdrFiles to backupDirPRDR and checks for duplicates
         /// </summary>
-        private void BackupPRDRs()
+        private string BackupPRDRs()
         {
             int backedUpFiles = 0;
             int duplicateFiles = 0;
@@ -294,7 +298,7 @@ namespace RDR2PhotoConverter
                 }
             }
 
-            statusBarTextBlock.Text = $"{backedUpFiles} files backed up, {duplicateFiles} duplicates. ";
+            return $"{backedUpFiles} files backed up, {duplicateFiles} duplicates.";
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RDR2PhotoConverter"
         mc:Ignorable="d"
-         d:DesignHeight ="450"
+        d:DesignHeight ="450"
         d:DesignWidth ="640"
         ResizeMode="NoResize"
         Title="RDR2 Photo Converter" Height="450" Width="640" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" Background="#FF0C0C0C" Foreground="#FF020202" FontFamily="Georgia">
