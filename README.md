@@ -1,7 +1,7 @@
 # RDR2 Photo Converter
 
 <p align="center">
-  <img width="640" height="450" src="https://github.com/sneakyazwhat/RDR2PhotoConverter/blob/main/preview.png">
+  <img width="640" height="450" src="https://github.com/SneakyAzWhat/RDR2PhotoConverter/blob/master/preview.png">
 </p>
 
 &nbsp;  
