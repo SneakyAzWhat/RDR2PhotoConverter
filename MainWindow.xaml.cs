@@ -99,9 +99,15 @@ namespace RDR2PhotoConverter
         {
             GetValidFiles(activeDir);
 
+            string backupInfo;
+
             if (myBackupCheckbox.IsChecked == true)
             {
-                BackupPRDRs();
+                backupInfo = BackupPRDRs();
+            }
+            else
+            {
+                backupInfo = "";
             }
 
             foreach (var file in prdrFiles)
@@ -118,7 +124,16 @@ namespace RDR2PhotoConverter
                     counter++;
                 }
 
-                File.WriteAllBytes($"{convertedFilesDir}\\{fileName}.jpg", fileInBytesTemp);
+                try
+                {
+                    //ISSUE: This is triggering an exception for windows 7 user
+                    File.WriteAllBytes($"{convertedFilesDir}\\{fileName}.jpg", fileInBytesTemp);
+                }
+                catch (Exception exception)
+                {
+                    //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
+                    MessageBox.Show($"WriteAllBytes exception, chances are the program didn't work. Disabling your antivirus or whitelisting the program may fix this. \n\n{exception.Message} ");
+                }
 
                 if (myDeleteCheckbox.IsChecked == true)
                 {
@@ -126,7 +141,7 @@ namespace RDR2PhotoConverter
                 }
             }
 
-            statusBarTextBlock.Text += $"{prdrFiles.Count} files converted into images.";
+            statusBarTextBlock.Text = $"{backupInfo} {prdrFiles.Count} files converted into images.";
 
             prdrFiles.Clear();
 
@@ -190,7 +205,6 @@ namespace RDR2PhotoConverter
         private void GetValidFiles(string path)
         {
             string[] files = Directory.GetFiles(path);
-            statusBarTextBlock.Text = $"Retrieving the applicable PRDR files";
 
             foreach (var file in files)
             {
@@ -274,7 +288,7 @@ namespace RDR2PhotoConverter
         /// <summary>
         /// Backs up every file in prdrFiles to backupDirPRDR and checks for duplicates
         /// </summary>
-        private void BackupPRDRs()
+        private string BackupPRDRs()
         {
             int backedUpFiles = 0;
             int duplicateFiles = 0;
@@ -288,13 +302,17 @@ namespace RDR2PhotoConverter
                     File.Copy(Path.Combine(activeDir, fileName), Path.Combine(backupDirPRDR, $"{GetMetaData(file)} {file.Substring(activeDir.Length + 1)}"), false);
                     backedUpFiles++;
                 }
-                catch (Exception)
+                catch (IOException)
                 {
                     duplicateFiles++;
                 }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"BackupPRDRs: {e.Message}");
+                }
             }
 
-            statusBarTextBlock.Text = $"{backedUpFiles} files backed up, {duplicateFiles} duplicates. ";
+            return $"{backedUpFiles} files backed up, {duplicateFiles} duplicates.";
         }
     }
 }
