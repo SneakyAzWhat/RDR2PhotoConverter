@@ -222,32 +222,31 @@ namespace RDR2PhotoConverter
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        private string GetMetaData(string file)
+        private static string GetMetaData(string file)
         {
             byte[] fileInBytes = File.ReadAllBytes(file);
 
             string dataString = "";
 
             //Iterating through the indexes 20-47 to get the date/time the picture was taken (These indexes contain the most pertinent information)
-            for (int i = 20; i < 48; i++)
+            for (int i = 14; i < 48; i++)
             {
                 if (fileInBytes[i] > 31) //bytes < 31 are ascii and are not relevant for our task
                 {
-                    switch (fileInBytes[i])
-                    {
-                        case 47:
-                            dataString += "-"; // Replacing / with -
-                            break;
-                        case 58:
-                            dataString += ""; //Replacing : with nothing
-                            break;
-                        default:
-                            dataString += $"{Convert.ToChar(fileInBytes[i])}";
-                            break;
-                    }
+                    dataString += $"{Convert.ToChar(fileInBytes[i])}";
                 }
             }
-            return dataString;
+            var split = dataString.Trim().Split(" ");
+            var date = split[0].Split("/");
+            string month = date[0],
+                day = date[1],
+                year = date[2];
+            var time = split[1].Split(":");
+            string hour = time[0],
+                minute = time[1],
+                second = time[2];
+
+            return $"{year}-{month}-{day} {hour}.{minute}.{second}";
         }
         #endregion
 
