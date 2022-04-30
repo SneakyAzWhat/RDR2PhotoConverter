@@ -133,7 +133,7 @@ namespace RDR2PhotoConverter
                 catch (Exception exception)
                 {
                     //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
-                    MessageBox.Show($"WriteAllBytes exception, chances are the program didn't work. Disabling your antivirus or whitelisting the program may fix this. \n\n{exception.Message} ");
+                    MessageBox.Show($"WriteAllBytes exception, chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
                 }
 
                 if (myDeleteCheckbox.IsChecked == true)
