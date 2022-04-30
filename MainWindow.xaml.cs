@@ -226,19 +226,25 @@ namespace RDR2PhotoConverter
         private static string GetMetaData(string file)
         {
             byte[] fileInBytes = File.ReadAllBytes(file);
-
             string dataString = "";
 
-            //Iterating through the indexes 20-47 to get the date/time the picture was taken (These indexes contain the most pertinent information)
-            for (int i = 14; i < 48; i++)
+            //Iterating through the indexes 20-54 to get the date/time the picture was taken (These indexes contain the date and time metadata of when photo was taken)
+            for (int i = 20; i < 54; i++)
             {
+                
                 if (fileInBytes[i] > 31) //bytes < 31 are ascii and are not relevant for our task
                 {
                     dataString += $"{Convert.ToChar(fileInBytes[i])}";
                 }
             }
+
             var split = dataString.Trim().Split(" ");
             var date = split[0].Split("/");
+
+            //these are just print files for testing and correct formatting, can be ignored
+            //File.WriteAllLines($"{convertedFilesDir}\\split.txt", split);
+            //File.WriteAllLines($"{convertedFilesDir}\\date.txt", date);
+
             string month = date[0],
                 day = date[1],
                 year = date[2];
@@ -268,6 +274,7 @@ namespace RDR2PhotoConverter
         /// </summary>
         private void SetAppDirectories()
         {
+
             string myPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             convertedFilesDir = $"{myPictures}\\RDR2 Photos";
             backupDirPRDR = $"{myPictures}\\RDR2 Photos\\prdr backups";
