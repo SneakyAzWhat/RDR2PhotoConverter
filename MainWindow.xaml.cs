@@ -32,7 +32,15 @@ namespace RDR2PhotoConverter
         {
             InitializeComponent();
 
-            userName = Environment.UserName;
+            try
+            {
+                userName = Environment.UserName;
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Exception when assigning userName = Environment.UserName, USER NOTE: Please reach out to developer on github for assistance, RAW:{e.Message}");
+            }
 
             SetDefaultDirectory();
             SetAppDirectories();
@@ -133,7 +141,7 @@ namespace RDR2PhotoConverter
                 catch (Exception exception)
                 {
                     //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
-                    MessageBox.Show($"WriteAllBytes exception, chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
+                    MessageBox.Show($"EXCEPTION: WriteAllBytes, USER NOTE:  chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
                 }
 
                 if (myDeleteCheckbox.IsChecked == true)
@@ -263,8 +271,16 @@ namespace RDR2PhotoConverter
         #region Setters
         private void SetDefaultDirectory()
         {
-            string[] fulldir = Directory.GetDirectories($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Rockstar Games\\Red Dead Redemption 2\\Profiles");
-            defaultDirPRDR = fulldir[0];
+            try
+            {
+                string[] fulldir = Directory.GetDirectories($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Rockstar Games\\Red Dead Redemption 2\\Profiles");
+                defaultDirPRDR = fulldir[0];
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"EXCEPTION: SetDefaultDirectory method. NOTE TO USER: Select the 'use custom path' option on this application and paste in the path. See github page for more info and to reach out to the developer. RAW: {e.Message}");
+            }
 
             Debug.WriteLine(defaultDirPRDR);
         }
@@ -274,8 +290,16 @@ namespace RDR2PhotoConverter
         /// </summary>
         private void SetAppDirectories()
         {
+            string myPictures = "";
+            try
+            {
+                myPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"EXCEPTION: SetAppDirectories Environment.GetFolderPath, USER NOTE: Please reach out to developer on github for assitance RAW: {e.Message}");
+            }
 
-            string myPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             convertedFilesDir = $"{myPictures}\\RDR2 Photos";
             backupDirPRDR = $"{myPictures}\\RDR2 Photos\\prdr backups";
 
