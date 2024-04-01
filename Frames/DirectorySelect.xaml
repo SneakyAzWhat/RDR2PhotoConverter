@@ -1,0 +1,34 @@
+﻿<Page x:Class="RDR2PhotoConverter.Frames.DirectorySelect"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RDR2PhotoConverter.Frames"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DirectorySelect">
+
+    <StackPanel VerticalAlignment="Center">
+        <Grid Margin="40 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Height="30" Text="Enter path here" />
+            <StackPanel Grid.Row="1" Height="30" Margin="0 10">
+                <Grid Height="30" Margin="400 0 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="15" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="15" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="Default" />
+                    <Button Grid.Column="2" Content="Browse" />
+                    <Button Grid.Column="4" Content="Save" />
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</Page>
