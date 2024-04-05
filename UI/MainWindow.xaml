@@ -12,7 +12,10 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True">
-    <Border CornerRadius="10" Background="White">
+    <Border CornerRadius="10">
+        <Border.Background>
+            <ImageBrush ImageSource="../background.jpg" />
+        </Border.Background>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
