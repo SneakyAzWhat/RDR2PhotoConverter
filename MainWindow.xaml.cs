@@ -1,4 +1,4 @@
-
+using RDR2PhotoConverter.Frames;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,10 +28,15 @@ namespace RDR2PhotoConverter
         List<string> prdrFiles = new List<string>();
         private string fileName;
 
+        // pages
+        private readonly DirectorySelect directorySelectPage;
+
         public MainWindow()
         {
             InitializeComponent();
-
+            directorySelectPage = new DirectorySelect();
+            ParentContainer.Content = directorySelectPage;
+            TitleBar.Text = "Directory Select";
             try
             {
                 userName = Environment.UserName;
@@ -47,7 +52,7 @@ namespace RDR2PhotoConverter
 
             activeDir = defaultDirPRDR;
 
-            dirInputTextBox.Text = defaultDirPRDR;
+            //dirInputTextBox.Text = defaultDirPRDR;
         }
 
         #region ClickEvents
@@ -58,7 +63,7 @@ namespace RDR2PhotoConverter
         /// <param name="e"></param>
         private void OnDefaultPathClicked(object sender, RoutedEventArgs e)
         {
-            dirInputTextBox.Text = defaultDirPRDR;
+            directorySelectPage.DirectoryString.Text = defaultDirPRDR;
         }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace RDR2PhotoConverter
         /// <param name="e"></param>
         private void OnCustomPathClicked(object sender, RoutedEventArgs e)
         {
-            dirInputTextBox.Text = "Paste your custom path here";
+            //dirInputTextBox.Text = "Paste your custom path here";
         }
 
         /// <summary>
@@ -88,15 +93,16 @@ namespace RDR2PhotoConverter
         /// <param name="e"></param>
         private void OnSetDirectoryClick(object sender, RoutedEventArgs e)
         {
-            if (myDefaultPathRadioButton.IsChecked == true)
-            {
-                statusBarTextBlock.Text = $"Valid Default Path found";
-            }
-            else if (myCustomPathRadioButton.IsChecked == true)
-            {
-                GetCustomDir();
-                activeDir = customDirPRDR;
-            }
+            //if (myDefaultPathRadioButton.IsChecked == true)
+            //{
+            //    statusBarTextBlock.Text = $"Valid Default Path found";
+            //}
+            //else if (myCustomPathRadioButton.IsChecked == true)
+            //{
+            //    GetCustomDir();
+            //    activeDir = customDirPRDR;
+            //}
+            // TODO
         }
 
         /// <summary>
@@ -109,15 +115,15 @@ namespace RDR2PhotoConverter
             GetValidFiles(activeDir);
 
             string backupInfo;
-
-            if (myBackupCheckbox.IsChecked == true)
-            {
-                backupInfo = BackupPRDRs();
-            }
-            else
-            {
-                backupInfo = "";
-            }
+            // TODO
+            //if (myBackupCheckbox.IsChecked == true)
+            //{
+            //    backupInfo = BackupPRDRs();
+            //}
+            //else
+            //{
+            //    backupInfo = "";
+            //}
 
             foreach (var file in prdrFiles)
             {
@@ -143,18 +149,18 @@ namespace RDR2PhotoConverter
                     //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
                     MessageBox.Show($"EXCEPTION: WriteAllBytes, USER NOTE:  chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
                 }
-
-                if (myDeleteCheckbox.IsChecked == true)
-                {
-                    File.Delete(file);
-                }
+                // TODO
+                //if (myDeleteCheckbox.IsChecked == true)
+                //{
+                //    File.Delete(file);
+                //}
             }
 
-            statusBarTextBlock.Text = $"{backupInfo} {prdrFiles.Count} files converted into images.";
+            //statusBarTextBlock.Text = $"{backupInfo} {prdrFiles.Count} files converted into images.";
 
             prdrFiles.Clear();
 
-            MessageBox.Show($"{statusBarTextBlock.Text} All done!");
+            //MessageBox.Show($"{statusBarTextBlock.Text} All done!");
         }
 
         /// <summary>
@@ -186,6 +192,20 @@ namespace RDR2PhotoConverter
             };
             Process.Start(psi);
         }
+
+        private void OnCloseClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OnTitleBarDrag(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
         #endregion
 
 
@@ -195,16 +215,17 @@ namespace RDR2PhotoConverter
         #region Getters
         private void GetCustomDir()
         {
-            customDirPRDR = dirInputTextBox.Text;
-            if (Directory.Exists(customDirPRDR))
-            {
-                statusBarTextBlock.Text = "Valid Custom Path entered";
-            }
-            else
-            {
-                statusBarTextBlock.Text = "Invalid Custom Path entered, please double check your entered path and try again";
-                MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
-            }
+            // TODO
+            //customDirPRDR = dirInputTextBox.Text;
+            //if (Directory.Exists(customDirPRDR))
+            //{
+            //    statusBarTextBlock.Text = "Valid Custom Path entered";
+            //}
+            //else
+            //{
+            //    statusBarTextBlock.Text = "Invalid Custom Path entered, please double check your entered path and try again";
+            //    MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
+            //}
         }
 
         /// <summary>
@@ -222,8 +243,8 @@ namespace RDR2PhotoConverter
                     prdrFiles.Add(file);
                 }
             }
-
-            statusBarTextBlock.Text = $"PRDRs retrieved, ready to convert files";
+            // TODO
+            //statusBarTextBlock.Text = $"PRDRs retrieved, ready to convert files";
         }
 
         /// <summary>
