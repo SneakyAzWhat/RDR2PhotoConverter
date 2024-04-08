@@ -7,7 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <!-- Border with rounded corners -->
         <Border x:Name="border" Background="#F8F8F8" BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="5">
             <!-- TextBox for input -->
             <TextBox x:Name="textBox" Background="Transparent" BorderThickness="0" Padding="5"

@@ -26,8 +26,18 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Title Bar" FontSize="25" />
-                <Button Width="40" Height="40" Grid.Column="1" Click="Close_Click" />
+                <TextBlock FontSize="28" x:Name="TitleBar" FontWeight="Medium" />
+                <Button
+                    Width="40"
+                    Height="40"
+                    Grid.Column="1"
+                    Click="Close_Click"
+                    Background="Transparent"
+                    BorderThickness="0" 
+                    Cursor="Hand"
+                >
+                    <Image Source="../cross-icon.png" />
+                </Button>
             </Grid>
             <Frame x:Name="ParentContainer" Grid.Row="1"/>
         </Grid>

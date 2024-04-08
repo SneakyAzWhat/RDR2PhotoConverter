@@ -15,6 +15,7 @@ namespace RDR2PhotoConverter.UI
             InitializeComponent();
             DirectorySelectPage = new DirectorySelect();
             ParentContainer.Content = DirectorySelectPage;
+            TitleBar.Text = "Directory Select";
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)

@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <None Remove="background.jpg" />
+    <None Remove="cross-icon.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="background.jpg" />
+    <Resource Include="cross-icon.png" />
   </ItemGroup>
 
 </Project>
