@@ -17,30 +17,72 @@
         <Border.Background>
             <ImageBrush ImageSource="./background.jpg" />
         </Border.Background>
-        <Grid>
+        <Grid ClipToBounds="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
+                <RowDefinition  Height="30" />
             </Grid.RowDefinitions>
             <Grid Margin="20 10" Grid.Row="0" MouseLeftButtonDown="OnTitleBarDrag">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
-                <TextBlock FontSize="28" x:Name="TitleBar" FontWeight="Medium" />
+                <TextBlock FontSize="28" x:Name="titleBar" FontWeight="Medium" />
                 <Button
-                Width="40"
-                Height="40"
-                Grid.Column="1"
-                Click="OnCloseClick"
-                Background="Transparent"
-                BorderThickness="0" 
-                Cursor="Hand"
-            >
+                    Width="40"
+                    Height="40"
+                    Grid.Column="1"
+                    Click="OnCloseClick"
+                    Background="Transparent"
+                    BorderThickness="0" 
+                    Cursor="Hand"
+                >
                     <Image Source="./cross-icon.png" />
                 </Button>
             </Grid>
-            <Frame x:Name="ParentContainer" Grid.Row="1"/>
+            <Frame x:Name="parentContainer" Grid.Row="1"/>
+            <Border CornerRadius="0, 0, 10, 10" Background="Black" Grid.Row="2" Padding="10, 0, 10, 2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="70" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Text="Status:"
+                        Foreground="#F0D20C"
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        Grid.Column="0"
+                        x:Name="statusBarTextBlock"
+                    />
+                    <StackPanel Orientation="Horizontal" Grid.Column="1">
+                        <Button
+                            Width="30"
+                            Height="30"
+                            Grid.Column="1"
+                            Click="OnMyTwitterClick"
+                            Background="Transparent"
+                            BorderThickness="0" 
+                            Cursor="Hand"
+                            Margin="0, 0, 10, 0"
+                        >
+                            <Image Source="twitterx.png" />
+                        </Button>
+                        <Button
+                            Width="30"
+                            Height="30"
+                            Grid.Column="1"
+                            Click="OnMyGithubClick"
+                            Background="Transparent"
+                            BorderThickness="0" 
+                            Cursor="Hand"
+                        >
+                            <Image Source="github.png" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
         </Grid>
     </Border>
 </Window>

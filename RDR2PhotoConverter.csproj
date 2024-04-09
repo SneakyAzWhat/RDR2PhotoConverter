@@ -9,11 +9,17 @@
   <ItemGroup>
     <None Remove="background.jpg" />
     <None Remove="cross-icon.png" />
+    <None Remove="github-logo.png" />
+    <None Remove="github.png" />
+    <None Remove="twitterx.png" />
+    <None Remove="x-logo.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="background.jpg" />
     <Resource Include="cross-icon.png" />
+    <Resource Include="github.png" />
+    <Resource Include="twitterx.png" />
   </ItemGroup>
 
 </Project>

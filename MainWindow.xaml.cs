@@ -35,8 +35,8 @@ namespace RDR2PhotoConverter
         {
             InitializeComponent();
             directorySelectPage = new DirectorySelect();
-            ParentContainer.Content = directorySelectPage;
-            TitleBar.Text = "Directory Select";
+            parentContainer.Content = directorySelectPage;
+            titleBar.Text = "Directory Select";
             try
             {
                 userName = Environment.UserName;
@@ -52,7 +52,7 @@ namespace RDR2PhotoConverter
 
             activeDir = defaultDirPRDR;
 
-            //dirInputTextBox.Text = defaultDirPRDR;
+            directorySelectPage.dirInputTextBox.Text = defaultDirPRDR;
         }
 
         #region ClickEvents
@@ -63,17 +63,7 @@ namespace RDR2PhotoConverter
         /// <param name="e"></param>
         private void OnDefaultPathClicked(object sender, RoutedEventArgs e)
         {
-            directorySelectPage.DirectoryString.Text = defaultDirPRDR;
-        }
-
-        /// <summary>
-        /// Updates the text displayed in the TextBox for clarity purposes
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnCustomPathClicked(object sender, RoutedEventArgs e)
-        {
-            //dirInputTextBox.Text = "Paste your custom path here";
+            directorySelectPage.dirInputTextBox.Text = defaultDirPRDR;
         }
 
         /// <summary>
@@ -160,7 +150,7 @@ namespace RDR2PhotoConverter
 
             prdrFiles.Clear();
 
-            //MessageBox.Show($"{statusBarTextBlock.Text} All done!");
+            MessageBox.Show($"{statusBarTextBlock.Text} All done!");
         }
 
         /// <summary>
@@ -215,17 +205,16 @@ namespace RDR2PhotoConverter
         #region Getters
         private void GetCustomDir()
         {
-            // TODO
-            //customDirPRDR = dirInputTextBox.Text;
-            //if (Directory.Exists(customDirPRDR))
-            //{
-            //    statusBarTextBlock.Text = "Valid Custom Path entered";
-            //}
-            //else
-            //{
-            //    statusBarTextBlock.Text = "Invalid Custom Path entered, please double check your entered path and try again";
-            //    MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
-            //}
+            customDirPRDR = directorySelectPage.dirInputTextBox.Text;
+            if (Directory.Exists(customDirPRDR))
+            {
+                statusBarTextBlock.Text = "Valid Custom Path entered";
+            }
+            else
+            {
+                statusBarTextBlock.Text = "Invalid Custom Path entered, please double check your entered path and try again";
+                MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
+            }
         }
 
         /// <summary>
