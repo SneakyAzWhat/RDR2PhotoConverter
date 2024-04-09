@@ -15,10 +15,8 @@
             </Grid.RowDefinitions>
             <local:TextInputField Placeholder="Enter path here" x:Name="dirInputTextBox" />
             <StackPanel Grid.Row="1" Height="30" Margin="0 10">
-                <Grid Height="30" Margin="400 0 0 0">
+                <Grid Height="30" Margin="500 0 0 0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="15" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="15" />
                         <ColumnDefinition Width="*" />
@@ -26,17 +24,12 @@
                     <local:ActionButtonPrimary
                         Grid.Column="0"
                         ButtonContent="Default"
-                        Click="Default_Click"
+                        x:Name="defaultButton"
                     />
                     <local:ActionButtonPrimary
                         Grid.Column="2"
                         ButtonContent="Browse"
-                        Click="Browse_Click"
-                    />
-                    <local:ActionButtonPrimary
-                        Grid.Column="4"
-                        ButtonContent="Save"
-                        Click="Save_Click"
+                        x:Name="browseButton"
                     />
                 </Grid>
             </StackPanel>

@@ -5,9 +5,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
-
+using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace RDR2PhotoConverter
 {
@@ -35,6 +37,8 @@ namespace RDR2PhotoConverter
         {
             InitializeComponent();
             directorySelectPage = new DirectorySelect();
+            directorySelectPage.defaultButton.Click += OnDefaultPathClicked;
+            directorySelectPage.browseButton.Click += OnBrowseClick;
             parentContainer.Content = directorySelectPage;
             titleBar.Text = "Directory Select";
             try
@@ -183,11 +187,21 @@ namespace RDR2PhotoConverter
             Process.Start(psi);
         }
 
+        /// <summary>
+        /// Clicking the close icon on the top right
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnCloseClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Dragging the titlebar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnTitleBarDrag(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -195,6 +209,26 @@ namespace RDR2PhotoConverter
                 DragMove();
             }
         }
+
+        /// <summary>
+        /// On clicking the brose directory button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnBrowseClick(object sender, RoutedEventArgs e)
+        {
+            var folderSelector = new FolderBrowserDialog();
+            var result = folderSelector.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                directorySelectPage.dirInputTextBox.Text = folderSelector.SelectedPath;
+                statusBarTextBlock.Text = "Status: Path set to selected folder";
+                return;
+            }
+            statusBarTextBlock.Text = "Status: No path was selected";
+        }
+
 
         #endregion
 
@@ -285,7 +319,7 @@ namespace RDR2PhotoConverter
             {
                 string[] fulldir = Directory.GetDirectories($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Rockstar Games\\Red Dead Redemption 2\\Profiles");
                 defaultDirPRDR = fulldir[0];
-
+                statusBarTextBlock.Text = "Status: Path set to default directory";
             }
             catch (Exception e)
             {
