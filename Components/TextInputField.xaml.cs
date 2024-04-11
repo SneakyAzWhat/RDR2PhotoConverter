@@ -14,6 +14,9 @@ namespace RDR2PhotoConverter.Components
         public static readonly DependencyProperty PlaceholderProperty =
             DependencyProperty.Register("Placeholder", typeof(string), typeof(TextInputField));
 
+        public static readonly DependencyProperty LabelProperty =
+            DependencyProperty.Register("Label", typeof(string), typeof(TextInputField));
+
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
@@ -24,6 +27,12 @@ namespace RDR2PhotoConverter.Components
         {
             get { return (string)GetValue(PlaceholderProperty); }
             set { SetValue(PlaceholderProperty, value); }
+        }
+
+        public string Label
+        {
+            get { return (string)GetValue(LabelProperty); }
+            set { SetValue(LabelProperty, value); }
         }
 
         public TextInputField()

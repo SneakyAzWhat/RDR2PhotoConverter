@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using MessageBox = System.Windows.MessageBox;
@@ -40,7 +39,7 @@ namespace RDR2PhotoConverter
             directorySelectPage.defaultButton.Click += OnDefaultPathClicked;
             directorySelectPage.browseButton.Click += OnBrowseClick;
             parentContainer.Content = directorySelectPage;
-            titleBar.Text = "Directory Select";
+            titleBar.Text = "RDR2 Photo Converter";
             try
             {
                 userName = Environment.UserName;
@@ -68,6 +67,7 @@ namespace RDR2PhotoConverter
         private void OnDefaultPathClicked(object sender, RoutedEventArgs e)
         {
             directorySelectPage.dirInputTextBox.Text = defaultDirPRDR;
+            statusBarTextBlock.Text = "Status: Path set to default directory.";
         }
 
         /// <summary>

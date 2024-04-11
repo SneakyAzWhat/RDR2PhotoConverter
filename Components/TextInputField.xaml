@@ -7,12 +7,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Border x:Name="border" Background="#F8F8F8" BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="5">
+        <Border x:Name="border" Background="Transparent">
             <!-- TextBox for input -->
-            <TextBox x:Name="textBox" Background="Transparent" BorderThickness="0" Padding="5"
-                     Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                     Foreground="#333333" FontSize="14" FontFamily="Segoe UI"
-                     VerticalContentAlignment="Center" />
+            <StackPanel Orientation="Vertical">
+                <TextBlock
+                    Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    FontSize="12"
+                    Margin="0, 0, 0, 5"
+                />
+                <Border Background="Transparent" BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="5">
+                    <TextBox x:Name="textBox" Background="#F8F8F8" BorderThickness="0" Padding="5"
+                             Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             Foreground="#333333" FontSize="14" FontFamily="Segoe UI"
+                             VerticalContentAlignment="Center" />
+                </Border>
+            </StackPanel>
         </Border>
         <!-- Placeholder text -->
         <TextBlock x:Name="placeholder" Text="{Binding Placeholder, RelativeSource={RelativeSource AncestorType=UserControl}}"
