@@ -38,8 +38,19 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        <StackPanel Orientation="Horizontal" Margin="40, 40">
-            <local:Checkbox LabelText="Backup PRDR Files" />
-        </StackPanel>
+        <Grid Margin="40, 40" Background="#20FFFFFF" Width="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 5">
+                <TextBlock Text="Backup PRDR Files" Margin="0 0 97 0" />
+                <local:CustomToggle />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 5">
+                <TextBlock Text="Delete PRDR Files After Conversion" Margin="0 0 10 0" />
+                <local:CustomToggle />
+            </StackPanel>
+        </Grid>
     </StackPanel>
 </Page>
