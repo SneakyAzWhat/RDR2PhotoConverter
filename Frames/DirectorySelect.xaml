@@ -38,19 +38,28 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        <Grid Margin="40, 40" Background="#20FFFFFF" Width="Auto">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 5">
-                <TextBlock Text="Backup PRDR Files" Margin="0 0 97 0" />
-                <local:CustomToggle />
-            </StackPanel>
-            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 5">
-                <TextBlock Text="Delete PRDR Files After Conversion" Margin="0 0 10 0" />
-                <local:CustomToggle />
-            </StackPanel>
-        </Grid>
+        <Border CornerRadius="5" Background="#90FFFFFF" Width="314">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="Backup PRDR Files" Margin="0 0 115 0" FontSize="14" FontWeight="Medium" />
+                    <local:CustomToggle x:Name="backupToggle" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="Delete PRDR Files After Conversion" Margin="0 0 10 0" FontSize="14" FontWeight="Medium" />
+                    <local:CustomToggle x:Name="deleteToggle" />
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Width="104" Height="28" Margin="10">
+            <local:ActionButtonPrimary
+                Grid.Column="2"
+                ButtonContent="Convert"
+                x:Name="convertButton"
+            />
+        </Border>
     </StackPanel>
 </Page>
