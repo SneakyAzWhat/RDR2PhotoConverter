@@ -38,6 +38,7 @@ namespace RDR2PhotoConverter
             directorySelectPage = new DirectorySelect();
             directorySelectPage.defaultButton.Click += OnDefaultPathClicked;
             directorySelectPage.browseButton.Click += OnBrowseClick;
+            directorySelectPage.convertButton.Click += OnConvertFilesClick;
             parentContainer.Content = directorySelectPage;
             titleBar.Text = "RDR2 Photo Converter";
             try
@@ -109,15 +110,14 @@ namespace RDR2PhotoConverter
             GetValidFiles(activeDir);
 
             string backupInfo;
-            // TODO
-            //if (myBackupCheckbox.IsChecked == true)
-            //{
-            //    backupInfo = BackupPRDRs();
-            //}
-            //else
-            //{
-            //    backupInfo = "";
-            //}
+            if (directorySelectPage.backupToggle.IsChecked == true)
+            {
+                backupInfo = BackupPRDRs();
+            }
+            else
+            {
+                backupInfo = "";
+            }
 
             foreach (var file in prdrFiles)
             {
@@ -143,14 +143,14 @@ namespace RDR2PhotoConverter
                     //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
                     MessageBox.Show($"EXCEPTION: WriteAllBytes, USER NOTE:  chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
                 }
-                // TODO
-                //if (myDeleteCheckbox.IsChecked == true)
-                //{
-                //    File.Delete(file);
-                //}
+
+                if (directorySelectPage.deleteToggle.IsChecked == true)
+                {
+                    File.Delete(file);
+                }
             }
 
-            //statusBarTextBlock.Text = $"{backupInfo} {prdrFiles.Count} files converted into images.";
+            statusBarTextBlock.Text = $"Status: {backupInfo} {prdrFiles.Count} files converted into images.";
 
             prdrFiles.Clear();
 
@@ -266,8 +266,8 @@ namespace RDR2PhotoConverter
                     prdrFiles.Add(file);
                 }
             }
-            // TODO
-            //statusBarTextBlock.Text = $"PRDRs retrieved, ready to convert files";
+
+            statusBarTextBlock.Text = $"Status: PRDRs retrieved, ready to convert files";
         }
 
         /// <summary>
