@@ -1,13 +1,14 @@
-
+using RDR2PhotoConverter.Frames;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
-
+using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace RDR2PhotoConverter
 {
@@ -28,10 +29,18 @@ namespace RDR2PhotoConverter
         List<string> prdrFiles = new List<string>();
         private string fileName;
 
+        // pages
+        private readonly DirectorySelect directorySelectPage;
+
         public MainWindow()
         {
             InitializeComponent();
-
+            directorySelectPage = new DirectorySelect();
+            directorySelectPage.defaultButton.Click += OnDefaultPathClicked;
+            directorySelectPage.browseButton.Click += OnBrowseClick;
+            directorySelectPage.convertButton.Click += OnConvertFilesClick;
+            parentContainer.Content = directorySelectPage;
+            titleBar.Text = "RDR2 Photo Converter";
             try
             {
                 userName = Environment.UserName;
@@ -46,8 +55,6 @@ namespace RDR2PhotoConverter
             SetAppDirectories();
 
             activeDir = defaultDirPRDR;
-
-            dirInputTextBox.Text = defaultDirPRDR;
         }
 
         #region ClickEvents
@@ -58,17 +65,8 @@ namespace RDR2PhotoConverter
         /// <param name="e"></param>
         private void OnDefaultPathClicked(object sender, RoutedEventArgs e)
         {
-            dirInputTextBox.Text = defaultDirPRDR;
-        }
-
-        /// <summary>
-        /// Updates the text displayed in the TextBox for clarity purposes
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnCustomPathClicked(object sender, RoutedEventArgs e)
-        {
-            dirInputTextBox.Text = "Paste your custom path here";
+            directorySelectPage.dirInputTextBox.Text = defaultDirPRDR;
+            statusBarTextBlock.Text = "Status: Path set to default directory.";
         }
 
         /// <summary>
@@ -82,35 +80,19 @@ namespace RDR2PhotoConverter
         }
 
         /// <summary>
-        /// Sets either the Default or Custom directory as the activeDir, dependent on which radio button is selected when this button is pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnSetDirectoryClick(object sender, RoutedEventArgs e)
-        {
-            if (myDefaultPathRadioButton.IsChecked == true)
-            {
-                statusBarTextBlock.Text = $"Valid Default Path found";
-            }
-            else if (myCustomPathRadioButton.IsChecked == true)
-            {
-                GetCustomDir();
-                activeDir = customDirPRDR;
-            }
-        }
-
-        /// <summary>
         /// Converts list of prdrFiles into images, if you checked the 'backup' or 'delete' boxes those things will happen here too
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnConvertFilesClick(object sender, RoutedEventArgs e)
         {
+            bool validPathFound = GetCustomDir();
+            if (!validPathFound) return;
+
             GetValidFiles(activeDir);
 
             string backupInfo;
-
-            if (myBackupCheckbox.IsChecked == true)
+            if (directorySelectPage.backupToggle.IsChecked == true)
             {
                 backupInfo = BackupPRDRs();
             }
@@ -144,13 +126,13 @@ namespace RDR2PhotoConverter
                     MessageBox.Show($"EXCEPTION: WriteAllBytes, USER NOTE:  chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
                 }
 
-                if (myDeleteCheckbox.IsChecked == true)
+                if (directorySelectPage.deleteToggle.IsChecked == true)
                 {
                     File.Delete(file);
                 }
             }
 
-            statusBarTextBlock.Text = $"{backupInfo} {prdrFiles.Count} files converted into images.";
+            statusBarTextBlock.Text = $"Status: {backupInfo} {prdrFiles.Count} files converted into images.";
 
             prdrFiles.Clear();
 
@@ -186,6 +168,50 @@ namespace RDR2PhotoConverter
             };
             Process.Start(psi);
         }
+
+        /// <summary>
+        /// Clicking the close icon on the top right
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnCloseClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        /// <summary>
+        /// Dragging the titlebar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTitleBarDrag(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+        /// <summary>
+        /// On clicking the brose directory button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnBrowseClick(object sender, RoutedEventArgs e)
+        {
+            var folderSelector = new FolderBrowserDialog();
+            var result = folderSelector.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                directorySelectPage.dirInputTextBox.Text = folderSelector.SelectedPath;
+                statusBarTextBlock.Text = "Status: Path set to selected folder";
+                return;
+            }
+            statusBarTextBlock.Text = "Status: No path was selected";
+        }
+
+
         #endregion
 
 
@@ -193,18 +219,18 @@ namespace RDR2PhotoConverter
         /// Checking whether the user entered custom path exists or not
         /// </summary>
         #region Getters
-        private void GetCustomDir()
+        private bool GetCustomDir()
         {
-            customDirPRDR = dirInputTextBox.Text;
+            customDirPRDR = directorySelectPage.dirInputTextBox.Text;
+            activeDir = customDirPRDR;
             if (Directory.Exists(customDirPRDR))
             {
-                statusBarTextBlock.Text = "Valid Custom Path entered";
+                statusBarTextBlock.Text = "Status: Valid Path entered.";
+                return true;
             }
-            else
-            {
-                statusBarTextBlock.Text = "Invalid Custom Path entered, please double check your entered path and try again";
-                MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
-            }
+            statusBarTextBlock.Text = "Status: Invalid Path entered, please double check your entered path and try again.";
+            MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
+            return false;
         }
 
         /// <summary>
@@ -223,7 +249,7 @@ namespace RDR2PhotoConverter
                 }
             }
 
-            statusBarTextBlock.Text = $"PRDRs retrieved, ready to convert files";
+            statusBarTextBlock.Text = $"Status: PRDRs retrieved, ready to convert files";
         }
 
         /// <summary>
@@ -275,7 +301,7 @@ namespace RDR2PhotoConverter
             {
                 string[] fulldir = Directory.GetDirectories($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Rockstar Games\\Red Dead Redemption 2\\Profiles");
                 defaultDirPRDR = fulldir[0];
-
+                statusBarTextBlock.Text = "Status: Path set to default directory";
             }
             catch (Exception e)
             {
