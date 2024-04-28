@@ -1,7 +1,7 @@
 # RDR2 Photo Converter
 
 <p align="center">
-  <img width="640" height="450" src="https://github.com/SneakyAzWhat/RDR2PhotoConverter/blob/master/preview.png.png">
+  <img width="800" height="450" src="https://raw.githubusercontent.com/SneakyAzWhat/RDR2PhotoConverter/master/v1.4%20app%20preview.png">
 </p>
 
 &nbsp;  
@@ -18,7 +18,7 @@ It is likely that you'll get a windows security warning and/or an antivirus prom
 >[Youtube video walkthrough if you prefer visual/audio to text instructions](https://www.youtube.com/watch?v=2dQcuId1TII)
 
 
-1. [Download the latest release (currently v1.3)](https://github.com/SneakyAzWhat/RDR2PhotoConverter/releases/download/v1.3/rdr2.photo.converter.v1.3.zip)
+1. [Download the latest release (currently v1.3)](https://github.com/SneakyAzWhat/RDR2PhotoConverter/releases/latest)
 2. Unzip it in your Documents folder (or wherever you'd like to store it)
 3. Run the 'RDR2 Photo Converter.exe' (Windows/antivirus may pop a warning here as mentioned above)
 4. -- You may be [asked](https://github.com/SneakyAzWhat/RDR2PhotoConverter/blob/master/dotnet5popup.png) to download '.net 5', the app depends on this windows functionality so click yes and download the x64 version, some of you may have it installed already. You can manually install it directly [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-5.0.17-windows-x64-installer)--
