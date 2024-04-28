@@ -28,7 +28,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
-                <TextBlock FontSize="28" x:Name="titleBar" FontWeight="Medium" />
+                <TextBlock FontSize="25" x:Name="titleBar" FontWeight="Medium" VerticalAlignment="Center" />
                 <Button
                     Width="40"
                     Height="40"
@@ -38,7 +38,7 @@
                     BorderThickness="0" 
                     Cursor="Hand"
                 >
-                    <Image Source="./cross-icon.png" />
+                    <Image Source="./cross-icon.png" Height="35" />
                 </Button>
             </Grid>
             <Frame x:Name="parentContainer" Grid.Row="1"/>

@@ -11,29 +11,5 @@ namespace RDR2PhotoConverter.Frames
         {
             InitializeComponent();
         }
-
-        /// <summary>
-        /// Click handler for default button press on directory select screen.
-        /// </summary>
-        private void Default_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Click handler for browse button press on directory select screen.
-        /// </summary>
-        private void Browse_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Click handler for save button press on directory select screen.
-        /// </summary>
-        private void Save_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
     }
 }

@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="RDR2PhotoConverter.Components.CustomToggle"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="50">
+    <Grid x:Name="ToggleGrid" Width="50" Height="20" Background="LightGray" MouseLeftButtonDown="ToggleGrid_MouseLeftButtonDown">
+        <TextBlock Text="No" x:Name="NoText" Margin="25 0 0 0" />
+        <TextBlock Text="Yes" x:Name="YesText" Margin="10 0 0 0" />
+        <Rectangle x:Name="BackgroundRect" Width="20" Height="20" Fill="White" Stroke="Black" StrokeThickness="1">
+            <Rectangle.RenderTransform>
+                <TranslateTransform x:Name="ToggleTransform"/>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+    </Grid>
+</UserControl>

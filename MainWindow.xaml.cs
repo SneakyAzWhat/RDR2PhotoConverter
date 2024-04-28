@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using MessageBox = System.Windows.MessageBox;
@@ -39,8 +38,9 @@ namespace RDR2PhotoConverter
             directorySelectPage = new DirectorySelect();
             directorySelectPage.defaultButton.Click += OnDefaultPathClicked;
             directorySelectPage.browseButton.Click += OnBrowseClick;
+            directorySelectPage.convertButton.Click += OnConvertFilesClick;
             parentContainer.Content = directorySelectPage;
-            titleBar.Text = "Directory Select";
+            titleBar.Text = "RDR2 Photo Converter";
             try
             {
                 userName = Environment.UserName;
@@ -55,8 +55,6 @@ namespace RDR2PhotoConverter
             SetAppDirectories();
 
             activeDir = defaultDirPRDR;
-
-            directorySelectPage.dirInputTextBox.Text = defaultDirPRDR;
         }
 
         #region ClickEvents
@@ -68,6 +66,7 @@ namespace RDR2PhotoConverter
         private void OnDefaultPathClicked(object sender, RoutedEventArgs e)
         {
             directorySelectPage.dirInputTextBox.Text = defaultDirPRDR;
+            statusBarTextBlock.Text = "Status: Path set to default directory.";
         }
 
         /// <summary>
@@ -81,43 +80,26 @@ namespace RDR2PhotoConverter
         }
 
         /// <summary>
-        /// Sets either the Default or Custom directory as the activeDir, dependent on which radio button is selected when this button is pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnSetDirectoryClick(object sender, RoutedEventArgs e)
-        {
-            //if (myDefaultPathRadioButton.IsChecked == true)
-            //{
-            //    statusBarTextBlock.Text = $"Valid Default Path found";
-            //}
-            //else if (myCustomPathRadioButton.IsChecked == true)
-            //{
-            //    GetCustomDir();
-            //    activeDir = customDirPRDR;
-            //}
-            // TODO
-        }
-
-        /// <summary>
         /// Converts list of prdrFiles into images, if you checked the 'backup' or 'delete' boxes those things will happen here too
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnConvertFilesClick(object sender, RoutedEventArgs e)
         {
+            bool validPathFound = GetCustomDir();
+            if (!validPathFound) return;
+
             GetValidFiles(activeDir);
 
             string backupInfo;
-            // TODO
-            //if (myBackupCheckbox.IsChecked == true)
-            //{
-            //    backupInfo = BackupPRDRs();
-            //}
-            //else
-            //{
-            //    backupInfo = "";
-            //}
+            if (directorySelectPage.backupToggle.IsChecked == true)
+            {
+                backupInfo = BackupPRDRs();
+            }
+            else
+            {
+                backupInfo = "";
+            }
 
             foreach (var file in prdrFiles)
             {
@@ -143,14 +125,14 @@ namespace RDR2PhotoConverter
                     //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
                     MessageBox.Show($"EXCEPTION: WriteAllBytes, USER NOTE:  chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
                 }
-                // TODO
-                //if (myDeleteCheckbox.IsChecked == true)
-                //{
-                //    File.Delete(file);
-                //}
+
+                if (directorySelectPage.deleteToggle.IsChecked == true)
+                {
+                    File.Delete(file);
+                }
             }
 
-            //statusBarTextBlock.Text = $"{backupInfo} {prdrFiles.Count} files converted into images.";
+            statusBarTextBlock.Text = $"Status: {backupInfo} {prdrFiles.Count} files converted into images.";
 
             prdrFiles.Clear();
 
@@ -237,18 +219,18 @@ namespace RDR2PhotoConverter
         /// Checking whether the user entered custom path exists or not
         /// </summary>
         #region Getters
-        private void GetCustomDir()
+        private bool GetCustomDir()
         {
             customDirPRDR = directorySelectPage.dirInputTextBox.Text;
+            activeDir = customDirPRDR;
             if (Directory.Exists(customDirPRDR))
             {
-                statusBarTextBlock.Text = "Valid Custom Path entered";
+                statusBarTextBlock.Text = "Status: Valid Path entered.";
+                return true;
             }
-            else
-            {
-                statusBarTextBlock.Text = "Invalid Custom Path entered, please double check your entered path and try again";
-                MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
-            }
+            statusBarTextBlock.Text = "Status: Invalid Path entered, please double check your entered path and try again.";
+            MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
+            return false;
         }
 
         /// <summary>
@@ -266,8 +248,8 @@ namespace RDR2PhotoConverter
                     prdrFiles.Add(file);
                 }
             }
-            // TODO
-            //statusBarTextBlock.Text = $"PRDRs retrieved, ready to convert files";
+
+            statusBarTextBlock.Text = $"Status: PRDRs retrieved, ready to convert files";
         }
 
         /// <summary>
