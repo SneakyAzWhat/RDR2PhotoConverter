@@ -25,6 +25,6 @@
         </Border>
         <!-- Placeholder text -->
         <TextBlock x:Name="placeholder" Text="{Binding Placeholder, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                   Foreground="#999999" Margin="7,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                   Foreground="#999999" Margin="7,20,0,0" VerticalAlignment="Center" IsHitTestVisible="False"/>
     </Grid>
 </UserControl>

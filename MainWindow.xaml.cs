@@ -55,8 +55,6 @@ namespace RDR2PhotoConverter
             SetAppDirectories();
 
             activeDir = defaultDirPRDR;
-
-            directorySelectPage.dirInputTextBox.Text = defaultDirPRDR;
         }
 
         #region ClickEvents
@@ -82,31 +80,15 @@ namespace RDR2PhotoConverter
         }
 
         /// <summary>
-        /// Sets either the Default or Custom directory as the activeDir, dependent on which radio button is selected when this button is pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnSetDirectoryClick(object sender, RoutedEventArgs e)
-        {
-            //if (myDefaultPathRadioButton.IsChecked == true)
-            //{
-            //    statusBarTextBlock.Text = $"Valid Default Path found";
-            //}
-            //else if (myCustomPathRadioButton.IsChecked == true)
-            //{
-            //    GetCustomDir();
-            //    activeDir = customDirPRDR;
-            //}
-            // TODO
-        }
-
-        /// <summary>
         /// Converts list of prdrFiles into images, if you checked the 'backup' or 'delete' boxes those things will happen here too
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnConvertFilesClick(object sender, RoutedEventArgs e)
         {
+            bool validPathFound = GetCustomDir();
+            if (!validPathFound) return;
+
             GetValidFiles(activeDir);
 
             string backupInfo;
@@ -237,18 +219,18 @@ namespace RDR2PhotoConverter
         /// Checking whether the user entered custom path exists or not
         /// </summary>
         #region Getters
-        private void GetCustomDir()
+        private bool GetCustomDir()
         {
             customDirPRDR = directorySelectPage.dirInputTextBox.Text;
+            activeDir = customDirPRDR;
             if (Directory.Exists(customDirPRDR))
             {
-                statusBarTextBlock.Text = "Valid Custom Path entered";
+                statusBarTextBlock.Text = "Status: Valid Path entered.";
+                return true;
             }
-            else
-            {
-                statusBarTextBlock.Text = "Invalid Custom Path entered, please double check your entered path and try again";
-                MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
-            }
+            statusBarTextBlock.Text = "Status: Invalid Path entered, please double check your entered path and try again.";
+            MessageBox.Show("Invalid Custom Path entered, please double check your entered path and try again \n\n Example of a valid path: \n I:\\SomeFolder\\AnotherFolder");
+            return false;
         }
 
         /// <summary>
