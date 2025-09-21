@@ -140,11 +140,10 @@ namespace RDR2PhotoConverter
         }
 
         /// <summary>
-        /// Clicking Twitter button in bottom right corner opens your browser and directs you to my twitter account
+        /// Clicking Bluesky button in bottom right corner opens your browser and directs you to my Bluesky account
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// 
         private void OnMyBlueskyClick(object sender, RoutedEventArgs e)
         {
             ProcessStartInfo psi = new ProcessStartInfo
@@ -154,6 +153,11 @@ namespace RDR2PhotoConverter
             };
             Process.Start(psi);
         }
+        /// <summary>
+        /// Clicking Twitter button in bottom right corner opens your browser and directs you to my twitter account
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMyTwitterClick(object sender, RoutedEventArgs e)
         {
             ProcessStartInfo psi = new ProcessStartInfo
