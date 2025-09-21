@@ -144,6 +144,16 @@ namespace RDR2PhotoConverter
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// 
+        private void OnMyBlueskyClick(object sender, RoutedEventArgs e)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = "https://bsky.app/profile/sneakyazwhat.bsky.social",
+                UseShellExecute = true
+            };
+            Process.Start(psi);
+        }
         private void OnMyTwitterClick(object sender, RoutedEventArgs e)
         {
             ProcessStartInfo psi = new ProcessStartInfo
