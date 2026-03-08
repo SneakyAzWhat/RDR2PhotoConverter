@@ -11,6 +11,14 @@ Convert photos that were captured with the game camera in [PC] Red Dead Redempti
 ## Why?
 This automates the process of converting, backing up and deleting X amount of files instead of manually going through each one. Personally I hated that there is a limit to how many photos you can have in your camera roll and didn't want to upload every single one to social club. This allows me to quickly create space for new photos while also giving me access to my pictures with standard image viewing programs since they are now just .jpg!
 
+## Recent Improvements (v1.6)
+- **Performance Enhancements**: Utilized `Span<T>` for efficient byte manipulation, reducing memory allocations.
+- **Async Operations**: File reading, writing, and backups are now asynchronous for better responsiveness with large files.
+- **Logging**: Integrated Serilog and Microsoft.Extensions.Logging for comprehensive logging to a file in Documents folder.
+- **Input Validation**: Added null and path validation to prevent crashes from invalid inputs.
+- **XML Documentation**: Improved code documentation for better maintainability.
+- **Code Quality**: Added .editorconfig for consistent code style and linting support.
+
 **NOTE**:&nbsp;  
 It is likely that you'll get a windows security warning and/or an antivirus prompt if for some reason you have one installed (talking about norton, mcaffee etc). This is expected behavior as I don't have a certificate nor have I looked into the process of how to disable those warnings for windows. As a result this application source code is available on my github to show what the program is doing, I have included little notes in the MainWindow.xaml.cs file to describe what is happening for people who may not be familiar with programming. If you have ANY further questions don't hesitate to ask me. If you're an experienced programmer, then I apologize for the verbose code/comments and overall mess! :P
 
