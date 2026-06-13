@@ -264,35 +264,46 @@ namespace RDR2PhotoConverter
         /// <returns></returns>
         private static string GetMetaData(string file)
         {
-            byte[] fileInBytes = File.ReadAllBytes(file);
-            string dataString = "";
-
-            //Iterating through the indexes 20-54 to get the date/time the picture was taken (These indexes contain the date and time metadata of when photo was taken)
-            for (int i = 20; i < 54; i++)
+            //Wrapped in try/catch to handle files that may be corrupted or without date information
+            try
             {
-                
-                if (fileInBytes[i] > 31) //bytes < 31 are ascii and are not relevant for our task
+                byte[] fileInBytes = File.ReadAllBytes(file);
+                string dataString = "";
+
+                //Iterating through the indexes 20-54 to get the date/time the picture was taken (These indexes contain the date and time metadata of when photo was taken)
+                for (int i = 20; i < 54; i++)
                 {
-                    dataString += $"{Convert.ToChar(fileInBytes[i])}";
+
+                    if (fileInBytes[i] > 31) //bytes < 31 are ascii and are not relevant for our task
+                    {
+                        dataString += $"{Convert.ToChar(fileInBytes[i])}";
+                    }
                 }
+
+                var split = dataString.Trim().Split(" ");
+                var date = split[0].Split("/");
+
+                //these are just print files for testing and correct formatting, can be ignored
+                //File.WriteAllLines($"{convertedFilesDir}\\split.txt", split);
+                //File.WriteAllLines($"{convertedFilesDir}\\date.txt", date);
+
+                string month = date[0],
+                    day = date[1],
+                    year = date[2];
+                var time = split[1].Split(":");
+                string hour = time[0],
+                    minute = time[1],
+                    second = time[2];
+
+                return $"{year}-{month}-{day} {hour}.{minute}.{second}";
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"GetMetaData: Could not read metadata for file '{Path.GetFileName(file)}'. It will be saved with a fallback name.\n\nRAW: {e.Message}");
+                return "unknown-date";
             }
 
-            var split = dataString.Trim().Split(" ");
-            var date = split[0].Split("/");
 
-            //these are just print files for testing and correct formatting, can be ignored
-            //File.WriteAllLines($"{convertedFilesDir}\\split.txt", split);
-            //File.WriteAllLines($"{convertedFilesDir}\\date.txt", date);
-
-            string month = date[0],
-                day = date[1],
-                year = date[2];
-            var time = split[1].Split(":");
-            string hour = time[0],
-                minute = time[1],
-                second = time[2];
-
-            return $"{year}-{month}-{day} {hour}.{minute}.{second}";
         }
         #endregion
 
