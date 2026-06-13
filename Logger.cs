@@ -29,9 +29,9 @@ namespace RDR2PhotoConverter
             Write($"[{Timestamp()}] [INFO] {message}");
         }
 
-        public static void LogError(string operation, string message)
+        public static void LogWarning(string operation, string message)
         {
-            Write($"[{Timestamp()}] [ERROR] Operation: {operation} | {message}");
+            Write($"[{Timestamp()}] [WARNING] Operation: {operation} | {message}");
         }
 
         public static void LogException(string operation, Exception ex)

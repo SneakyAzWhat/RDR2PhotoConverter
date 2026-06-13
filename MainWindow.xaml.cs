@@ -80,6 +80,13 @@ namespace RDR2PhotoConverter
 
             GetValidFiles(activeDir);
 
+            if (prdrFiles.Count == 0)
+            {
+                Logger.LogWarning("GetValidFiles", "No PRDR files found in directory");
+                MessageBox.Show("No PRDR files were found in the selected directory. Please double check your path and try again.");
+                return;
+            }
+
             Logger.Log($"Convert clicked - {prdrFiles.Count} PRDR files found in: {activeDir}");
 
             string backupInfo;
