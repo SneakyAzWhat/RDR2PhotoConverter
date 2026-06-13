@@ -17,8 +17,6 @@ namespace RDR2PhotoConverter
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static string userName;
-
         private static string defaultDirPRDR;
         private static string customDirPRDR;
         private static string activeDir;
@@ -41,15 +39,6 @@ namespace RDR2PhotoConverter
             directorySelectPage.convertButton.Click += OnConvertFilesClick;
             parentContainer.Content = directorySelectPage;
             titleBar.Text = "RDR2 Photo Converter";
-            try
-            {
-                userName = Environment.UserName;
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"Exception when assigning userName = Environment.UserName, USER NOTE: Please reach out to developer on github for assistance, RAW:{e.Message}");
-            }
 
             SetDefaultDirectory();
             SetAppDirectories();
