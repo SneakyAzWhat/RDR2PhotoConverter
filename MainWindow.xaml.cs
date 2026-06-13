@@ -173,7 +173,7 @@ namespace RDR2PhotoConverter
                        $"{failedConvertFiles.Count} failed to convert, {failedDeleteFiles.Count} failed to delete");
 
             statusBarTextBlock.Text = $"Status: {conversionSummary}";
-            MessageBox.Show($"{conversionSummary}\nAll done!");
+            MessageBox.Show($"{conversionSummary}\nAll done! Your files are located at: \\Pictures\\RDR2 Photos");
         }
 
         /// <summary>
