@@ -18,14 +18,13 @@ It is likely that you'll get a windows security warning and/or an antivirus prom
 >[Youtube video walkthrough if you prefer visual/audio to text instructions](https://www.youtube.com/watch?v=2dQcuId1TII)
 
 
-1. [Download the latest release (currently v1.5)](https://github.com/SneakyAzWhat/RDR2PhotoConverter/releases/latest)
+1. [Download the latest release (currently v1.6 BETA for windows 11 testing)](https://github.com/SneakyAzWhat/RDR2PhotoConverter/releases/tag/v1.6)
 2. Unzip it in your Documents folder (or wherever you'd like to store it)
 3. Run the 'RDR2 Photo Converter.exe' (Windows/antivirus may pop a warning here as mentioned above)
-4. -- You may be [asked](https://github.com/SneakyAzWhat/RDR2PhotoConverter/blob/master/dotnet5popup.png) to download '.net 9' (or .net 5 for v1.4 below), the app depends on this windows functionality so click yes and download the x64 version, some of you may have it installed already. You can manually install it directly [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-9.0.12-windows-x64-installer)--
-5. By default the program will retrieve the default path for these RDR2 photo files. If you've been manually moving the PRDR files to another path, you can select 'Custom Path' and paste in that path to convert them.
-6. Click the **Set Directory** button so the application knows which path you're using
-7. Decide if you want to backup/delete your prdr files during the conversion process and check the appropriate boxes (by default I have it backup your files. Deleting the files is useful to create space for more pictures)
-8. Click the **Convert** button, your files will be converted in addition to backed up/deleted based on your checkboxes
+4. By default the program will retrieve the default path for these RDR2 photo files. If you've been manually moving the PRDR files to another path, you can select 'Custom Path' and paste in that path to convert them.
+5. Click the **Set Directory** button so the application knows which path you're using
+6. Decide if you want to backup/delete your prdr files during the conversion process and check the appropriate boxes (by default I have it backup your files. Deleting the files is useful to create space for more pictures)
+7. Click the **Convert** button, your files will be converted in addition to backed up/deleted based on your checkboxes
 
 
 >pictures are stored in \Pictures\RDR2 Photos  
@@ -33,11 +32,11 @@ It is likely that you'll get a windows security warning and/or an antivirus prom
 
 
 ## Troubleshooting
-If you use an AntiVirus, sometimes it will not allow the application to function correctly. If you are having trouble with 'access denied' or something along those lines, try disabling your AntiVirus or whitelisting the application in your antivirus to see if that resolves the problem.
+If you use an AntiVirus, sometimes it will not allow the application to function correctly. If you are having trouble with 'access denied' or something along those lines, try disabling your AntiVirus or whitelisting the application in your antivirus to see if that resolves the problem. Additionally you can try to run the application as an admin to see if that works before submitting a bug report.
 
 &nbsp;   
 I'd like to give credit to the following [person/thread](https://www.reddit.com/r/PCRedDead/comments/dvejz5/rdr2_photomode_extractor/) for giving me the idea. Creating a desktop (WPF) application would be a fun little learning process, plus it makes things much easier for the average user to access and consume.
 
 Finally, I want to say thanks to the handful of people who helped test this out to make sure it functions properly (and without any errors riiight?). I was originally going to take time and turn this into an image viewer as well, but I am content with this little app and will look forward to working on some new projects. This was mainly for personal use but I figured sharing it could prove beneficial for others who rely on the in-game camera. If there is a serious bug or an overwhelming request I will set aside time to address that and update the app. Otherwise thanks for your time and enjoy :)
 
-P.S - Create an issue on github, comment on the reddit thread or reach out to me on [twitter](https://twitter.com/sneakyazwhat) or [discord](https://discord.gg/7zQVBV8Jtn) if something breaks or you need to get in touch.
+P.S - Create an [issue](https://github.com/SneakyAzWhat/RDR2PhotoConverter/issues) on github, comment on the reddit thread/youtube video or reach out to me on [bluesky](https://bsky.app/profile/sneakyazwhat.bsky.social) or discord (sneakyazwhat) if something breaks or you need to get in touch.
