@@ -80,6 +80,8 @@ namespace RDR2PhotoConverter
 
             GetValidFiles(activeDir);
 
+            Logger.Log($"Convert clicked - {prdrFiles.Count} PRDR files found in: {activeDir}");
+
             string backupInfo;
             if (directorySelectPage.backupToggle.IsChecked == true)
             {
@@ -89,6 +91,11 @@ namespace RDR2PhotoConverter
             {
                 backupInfo = "";
             }
+
+            int convertedCount = 0;
+            List<string> failedConvertFiles = new List<string>();
+            List<string> failedDeleteFiles = new List<string>();
+
 
             foreach (var file in prdrFiles)
             {
@@ -109,22 +116,25 @@ namespace RDR2PhotoConverter
 
                     try
                     {
-                        //ISSUE: This is triggering an exception for windows 7 user
+                        //ISSUE: This was triggering an exception for windows 7 user, low prio
                         File.WriteAllBytes($"{convertedFilesDir}\\{fileName}.jpg", fileInBytesTemp);
+                        convertedCount++;
+                        Logger.Log($"Converted: {Path.GetFileName(file)}");
                     }
                     catch (Exception exception)
                     {
                         //TODO
                         //LOG the exception to file with the method/operation running and the exception
                         //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
+                        Logger.LogException("WriteAllBytes", exception);
+                        failedConvertFiles.Add(Path.GetFileName(file));
                         MessageBox.Show($"EXCEPTION: WriteAllBytes, USER NOTE:  chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    //TODO
-                    //LOG it to a file that there was an issue. can track total number of files and then at the end say X of Y files converted
-                    //on the same note, could have a list to track files that couldn't be converted and add the file names to the list so the person can see 'xyz files didnt convert'
+                    Logger.LogException("OnConvertFilesClick - file processing", ex);
+                    failedConvertFiles.Add(Path.GetFileName(file));
                     continue;
                 }
 
@@ -134,21 +144,31 @@ namespace RDR2PhotoConverter
                     try
                     {
                         File.Delete(file);
-
+                        Logger.Log($"Deleted: {Path.GetFileName(file)}");
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        //TODO
-                        //LOG to file that there was an issue deleting
-                        //another list to track files that couldn't be deleted?
+                        Logger.LogException("File.Delete", ex);
+                        failedDeleteFiles.Add(Path.GetFileName(file));
                         continue;
                     }
                 }
             }
 
-            statusBarTextBlock.Text = $"Status: {backupInfo} {prdrFiles.Count} files converted into images.";
+            // Conversion summary message
+            string conversionSummary = $"{backupInfo} {convertedCount} of {prdrFiles.Count} files converted.";
 
-            MessageBox.Show($"{statusBarTextBlock.Text} All done!");
+            if (failedConvertFiles.Count > 0)
+                conversionSummary += $"\nFailed to convert: {string.Join(", ", failedConvertFiles)}";
+
+            if (failedDeleteFiles.Count > 0)
+                conversionSummary += $"\nSome files may not have deleted properly: {string.Join(", ", failedDeleteFiles)}";
+
+            Logger.Log($"Conversion complete - {convertedCount} of {prdrFiles.Count} converted, " +
+                       $"{failedConvertFiles.Count} failed to convert, {failedDeleteFiles.Count} failed to delete");
+
+            statusBarTextBlock.Text = $"Status: {conversionSummary}";
+            MessageBox.Show($"{conversionSummary}\nAll done!");
         }
 
         /// <summary>
