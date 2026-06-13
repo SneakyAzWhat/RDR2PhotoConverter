@@ -244,6 +244,8 @@ namespace RDR2PhotoConverter
         {
             string[] files = Directory.GetFiles(path);
 
+            prdrFiles.Clear();
+
             foreach (var file in files)
             {
                 if (file.Contains("PRDR"))
