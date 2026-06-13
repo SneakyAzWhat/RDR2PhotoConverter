@@ -92,32 +92,57 @@ namespace RDR2PhotoConverter
 
             foreach (var file in prdrFiles)
             {
-                fileName = $"{GetMetaData(file)} {file.Substring(activeDir.Length + 1)}";
-
-                byte[] fileInBytes = File.ReadAllBytes(file);
-                byte[] fileInBytesTemp = new byte[fileInBytes.Length - 300];
-                long counter = 0;
-
-                for (long i = 300; i < fileInBytes.LongLength; i++)
-                {
-                    fileInBytesTemp[counter] = fileInBytes[i];
-                    counter++;
-                }
 
                 try
                 {
-                    //ISSUE: This is triggering an exception for windows 7 user
-                    File.WriteAllBytes($"{convertedFilesDir}\\{fileName}.jpg", fileInBytesTemp);
+                    fileName = $"{GetMetaData(file)} {file.Substring(activeDir.Length + 1)}";
+
+                    byte[] fileInBytes = File.ReadAllBytes(file);
+                    byte[] fileInBytesTemp = new byte[fileInBytes.Length - 300];
+                    long counter = 0;
+
+                    for (long i = 300; i < fileInBytes.LongLength; i++)
+                    {
+                        fileInBytesTemp[counter] = fileInBytes[i];
+                        counter++;
+                    }
+
+                    try
+                    {
+                        //ISSUE: This is triggering an exception for windows 7 user
+                        File.WriteAllBytes($"{convertedFilesDir}\\{fileName}.jpg", fileInBytesTemp);
+                    }
+                    catch (Exception exception)
+                    {
+                        //TODO
+                        //LOG the exception to file with the method/operation running and the exception
+                        //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
+                        MessageBox.Show($"EXCEPTION: WriteAllBytes, USER NOTE:  chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
+                    }
                 }
-                catch (Exception exception)
+                catch (Exception)
                 {
-                    //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
-                    MessageBox.Show($"EXCEPTION: WriteAllBytes, USER NOTE:  chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
+                    //TODO
+                    //LOG it to a file that there was an issue. can track total number of files and then at the end say X of Y files converted
+                    //on the same note, could have a list to track files that couldn't be converted and add the file names to the list so the person can see 'xyz files didnt convert'
+                    continue;
                 }
+
 
                 if (directorySelectPage.deleteToggle.IsChecked == true)
                 {
-                    File.Delete(file);
+                    try
+                    {
+                        File.Delete(file);
+
+                    }
+                    catch (Exception)
+                    {
+                        //TODO
+                        //LOG to file that there was an issue deleting
+                        //another list to track files that couldn't be deleted?
+                        continue;
+                    }
                 }
             }
 
@@ -299,6 +324,8 @@ namespace RDR2PhotoConverter
             }
             catch (Exception e)
             {
+                //TODO
+                //LOG to a file this information, file name and method, exception thrown
                 MessageBox.Show($"GetMetaData: Could not read metadata for file '{Path.GetFileName(file)}'. It will be saved with a fallback name.\n\nRAW: {e.Message}");
                 return "unknown-date";
             }
