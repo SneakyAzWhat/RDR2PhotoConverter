@@ -123,9 +123,7 @@ namespace RDR2PhotoConverter
                     }
                     catch (Exception exception)
                     {
-                        //TODO
-                        //LOG the exception to file with the method/operation running and the exception
-                        //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied.
+                        //Exception: Access to the path 'C:\Users\USERNAME\Pictures\RDR2 Photos\FILENAME.jpg' is denied (windows 7 only?
                         Logger.LogException("WriteAllBytes", exception);
                         failedConvertFiles.Add(Path.GetFileName(file));
                         MessageBox.Show($"EXCEPTION: WriteAllBytes, USER NOTE:  chances are you just tried to convert the same files back to back OR some type of AntiVirus program is blocking the program from running properly. You can try restarting the application to see if that fixes the problem.\n\n{exception.Message} ");
@@ -342,8 +340,7 @@ namespace RDR2PhotoConverter
             }
             catch (Exception e)
             {
-                //TODO
-                //LOG to a file this information, file name and method, exception thrown
+                Logger.LogException("GetMetaData", e);
                 MessageBox.Show($"GetMetaData: Could not read metadata for file '{Path.GetFileName(file)}'. It will be saved with a fallback name.\n\nRAW: {e.Message}");
                 return "unknown-date";
             }
@@ -366,6 +363,7 @@ namespace RDR2PhotoConverter
             }
             catch (Exception e)
             {
+                Logger.LogException("SetDefaultDirectory", e);
                 MessageBox.Show($"EXCEPTION: SetDefaultDirectory method. NOTE TO USER: Select the 'use custom path' option on this application and paste in the path. See github page for more info and to reach out to the developer. RAW: {e.Message}");
             }
 
@@ -384,6 +382,7 @@ namespace RDR2PhotoConverter
             }
             catch (Exception e)
             {
+                Logger.LogException("SetAppDirectories", e);
                 MessageBox.Show($"EXCEPTION: SetAppDirectories Environment.GetFolderPath, USER NOTE: Please reach out to developer on github for assitance RAW: {e.Message}");
             }
 
@@ -426,6 +425,7 @@ namespace RDR2PhotoConverter
                 }
                 catch (Exception e)
                 {
+                    Logger.LogException("BackupPRDRs", e);
                     MessageBox.Show($"BackupPRDRs: {e.Message}");
                 }
             }
