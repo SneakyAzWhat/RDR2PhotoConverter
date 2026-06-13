@@ -148,8 +148,6 @@ namespace RDR2PhotoConverter
 
             statusBarTextBlock.Text = $"Status: {backupInfo} {prdrFiles.Count} files converted into images.";
 
-            prdrFiles.Clear();
-
             MessageBox.Show($"{statusBarTextBlock.Text} All done!");
         }
 
